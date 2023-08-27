@@ -24,5 +24,25 @@ sudo apt install nvidia-cuda-toolkit
 
 ## Datasets
 
-I have already pushed it on this repository but you can download it from [kaggle](https://www.kaggle.com/datasets/hojjatk/mnist-dataset) or the [official website](http://yann.lecun.com/exdb/mnist/index.html).
+You can download it from [kaggle](https://www.kaggle.com/datasets/hojjatk/mnist-dataset) or the [official website](http://yann.lecun.com/exdb/mnist/index.html) and place it inside the root directory of the project.
+
+## Build Instructions
+
+```bash
+git clone https://github.com/k0T0z/handwritten-numbers-classifier.git
+```
+```bash
+cd handwritten-numbers-classifier
+```
+```bash
+chmod +x install.sh
+```
+```bash
+./install.sh
+```
+```bash
+python3 main.py
+```
+
+
 
