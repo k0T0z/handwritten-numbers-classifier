@@ -52,7 +52,7 @@ python3 main.py
 
 ## Architecture
 
-```
+```mermaid
 flowchart LR
     subgraph input
     A[x1]
