@@ -28,7 +28,7 @@ You can download it from [kaggle](https://www.kaggle.com/datasets/hojjatk/mnist-
 
 Note that the `.pt` datasets are not supported here.
 
-## Build Instructions
+## Build Instructions (Linux only)
 
     - Clone the repository.
 ```bash
