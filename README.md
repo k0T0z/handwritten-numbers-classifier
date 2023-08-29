@@ -30,22 +30,22 @@ Note that the `.pt` datasets are not supported here.
 
 ## Build Instructions (Linux only)
 
-    - Clone the repository.
+ - Clone the repository.
 ```bash
 git clone https://github.com/k0T0z/handwritten-numbers-classifier.git
 ```
-    - Change directory to the project's root directory.
+ - Change directory to the project's root directory.
 ```bash
 cd handwritten-numbers-classifier
 ```
-    - Install the dependencies.
+ - Install the dependencies.
 ```bash
 chmod +x install.sh
 ```
 ```bash
 ./install.sh
 ```
-    - Run the project.
+ - Run the project.
 ```bash
 python3 main.py
 ```
