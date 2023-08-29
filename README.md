@@ -57,9 +57,6 @@ flowchart LR
     subgraph input
     A[x1]
     B[x2]
-    C[x3]
-    D[x4]
-    E[x5]
     F[...]
     G[x784]
     end
@@ -67,8 +64,6 @@ flowchart LR
     subgraph hidden1
     H[ReLU1]
     I[ReLU2]
-    J[ReLU3]
-    K[ReLU4]
     L[...]
     M[ReLU100]
     end
@@ -76,7 +71,6 @@ flowchart LR
     subgraph hidden2
     N[ReLU1]
     O[ReLU2]
-    P[ReLU3]
     Q[...]
     R[ReLU50]
     end
@@ -90,88 +84,43 @@ flowchart LR
 
     A --> |w1| H
     A --> |w2| I
-    A --> |w3| J
-    A --> |w4| K
-    A --> |w5| L
-    A --> |w6| M
+    A --> |w3| L
+    A --> |w4| M
 
-    B --> |w7| H
-    B --> |w8| I
-    B --> |w9| J
-    B --> |w10| K
-    B --> |w11| L
-    B --> |w12| M
+    B --> |w5| H
+    B --> |w6| I
+    B --> |w7| L
+    B --> |w8| M
 
-    C --> |w7| H
-    C --> |w8| I
-    C --> |w9| J
-    C --> |w10| K
-    C --> |w11| L
-    C --> |w12| M
+    F --> |w9| H
+    F --> |w10| I
+    F --> |w11| L
+    F --> |w12| M
 
-    D --> |w13| H
-    D --> |w14| I
-    D --> |w15| J
-    D --> |w16| K
-    D --> |w17| L
-    D --> |w18| M
-
-    E --> |w19| H
-    E --> |w20| I
-    E --> |w21| J
-    E --> |w22| K
-    E --> |w23| L
-    E --> |w24| M
-
-    F --> |w25| H
-    F --> |w26| I
-    F --> |w27| J
-    F --> |w28| K
-    F --> |w29| L
-    F --> |w30| M
-
-    G --> |w31| H
-    G --> |w32| I
-    G --> |w33| J
-    G --> |w34| K
-    G --> |w35| L
-    G --> |w36| M
+    G --> |w13| H
+    G --> |w14| I
+    G --> |w15| L
+    G --> |w16| M
 
     H --> |h1| N
     H --> |h2| O
-    H --> |h3| P
-    H --> |h4| Q
-    H --> |h5| R
+    H --> |h3| Q
+    H --> |h4| R
 
-    I --> |h6| N
-    I --> |h7| O
-    I --> |h8| P
-    I --> |h9| Q
-    I --> |h10| R
+    I --> |h5| N
+    I --> |h6| O
+    I --> |h7| Q
+    I --> |h8| R
 
-    J --> |h11| N
-    J --> |h12| O
-    J --> |h13| P
-    J --> |h14| Q
-    J --> |h15| R
+    L --> |h9| N
+    L --> |h10| O
+    L --> |h11| Q
+    L --> |h12| R
 
-    K --> |h16| N
-    K --> |h17| O
-    K --> |h18| P
-    K --> |h19| Q
-    K --> |h20| R
-
-    L --> |h21| N
-    L --> |h22| O
-    L --> |h23| P
-    L --> |h24| Q
-    L --> |h25| R
-
-    M --> |h26| N
-    M --> |h27| O
-    M --> |h28| P
-    M --> |h29| Q
-    M --> |h30| R
+    M --> |h13| N
+    M --> |h14| O
+    M --> |h15| Q
+    M --> |h16| R
 
     N --> |s1| S
     N --> |s2| T
@@ -183,20 +132,15 @@ flowchart LR
     O --> |s7| U
     O --> |s8| V
 
-    P --> |s9| S
-    P --> |s10| T
-    P --> |s11| U
-    P --> |s12| V
+    Q --> |s9| S
+    Q --> |s10| T
+    Q --> |s11| U
+    Q --> |s12| V
 
-    Q --> |s13| S
-    Q --> |s14| T
-    Q --> |s15| U
-    Q --> |s16| V
-
-    R --> |s17| S
-    R --> |s18| T
-    R --> |s19| U
-    R --> |s20| V
+    R --> |s13| S
+    R --> |s14| T
+    R --> |s15| U
+    R --> |s16| V
 
     S --> 0.04
     T --> 0.95
