@@ -9,87 +9,103 @@ from torch.optim import SGD as sgd
 import pandas as pd
 import torchviz
 
-# dataset = pd.read_csv('mnist_train.csv')
-# x = dataset.iloc[:, 1:].values # all columns except the first one
-# y = dataset.iloc[:, 0].values # first column is the label
+import torch.nn.functional as F
+from torch.utils.data import DataLoader, Dataset
 
-x = torch.tensor([[6, 2], [5, 2], [1, 3], [7, 6]]).float()
-y = torch.tensor([1, 5, 2, 5]).float()
 
-# print(x.shape)
-# print(y.shape)
+class CTDataset(Dataset):
+    def __init__(self, filepath):
+        self.dataset = pd.read_csv(filepath)
+
+        self.x = self.dataset.iloc[:, 1:].values  # all columns except the first one
+        self.y = self.dataset.iloc[:, 0].values  # first column is the label
+
+        # Reshape features into images (assuming images are 28x28 pixels)
+        self.x = self.x.reshape(-1, 28, 28)
+
+        # Convert to PyTorch tensors
+        self.x = torch.tensor(self.x)
+        self.y = torch.tensor(self.y)
+
+        # Normalize image pixels
+        self.x = self.x / 255.0
+
+        # Encoding labels into one-hot vectors
+        self.y = F.one_hot(self.y, num_classes=10).to(float)
+
+    def __len__(self):
+        return self.x.shape[0]
+
+    def __getitem__(self, i):
+        return self.x[i], self.y[i]
+
+
+train_ds = CTDataset("mnist_train.csv")
+test_ds = CTDataset("mnist_test.csv")
+
+# print(len(train_ds))
+# print(len(test_ds))
+
+# Process data in batches
+train_dl = DataLoader(train_ds, batch_size=5)
+test_dl = DataLoader(test_ds, batch_size=5)
 
 
 class MyNeuralNet(nn.Module):
     def __init__(self):
         super().__init__()
-        self.Matrix1 = nn.Linear(2, 80)  # bias=False
-        self.Matrix2 = nn.Linear(80, 80)  # bias=False
-        self.Matrix3 = nn.Linear(80, 1)  # bias=False
+        self.Matrix1 = nn.Linear(28**2, 100)  # bias=False
+        self.Matrix2 = nn.Linear(100, 50)  # bias=False
+        self.Matrix3 = nn.Linear(50, 10)  # bias=False
         self.R = nn.ReLU()
 
     def forward(self, x):
+        # Converting images from matrices to vectors (AKA flattening)
+        x = x.view(-1, 28**2)
         x = self.R(self.Matrix1(x))
         x = self.R(self.Matrix2(x))
         x = self.Matrix3(x)
         return x.squeeze()
 
 
-# Test model before training
 f = MyNeuralNet()
-yhat = f(x)
-
-L = nn.MSELoss()
-loss = L(yhat, y)
-
-print("Current output: ")
-print(yhat)
-print("Excepted output: ")
-print(y)
-print("Currect loss: ")
-print(loss)
 
 
-def train_model(x, y, f, n_epochs=50, lr=0.001):
-    opt = sgd(f.parameters(), lr=lr)  # Sofisticated Gradient Descent
-    L = nn.MSELoss()
+# Train model function
+def train_model(dl, f, n_epochs=20, lr=0.01):
+    # Optimization
+    opt = sgd(f.parameters(), lr=lr)
+    L = nn.CrossEntropyLoss()
 
     # Train model
     losses = []
-    for _ in range(n_epochs):
-        opt.zero_grad()  # flush previous epoch's gradient
-        loss_value = L(f(x), y)  # compute loss
-        loss_value.backward()  # compute gradient
-        opt.step()  # Perform iteration using gradient above
-        losses.append(loss_value.item())
-    return f, losses
+    epochs = []
+    for epoch in range(n_epochs):
+        print(f"Epoch {epoch}")
+        N = len(dl)
+        for i, (x, y) in enumerate(dl):
+            # Update the weights of the network
+            opt.zero_grad()
+            loss_value = L(f(x), y)
+            loss_value.backward()
+            opt.step()
+            # Store training data for plotting
+            epochs.append(epoch + i / N)
+            losses.append(loss_value.item())
+    return np.array(epochs), np.array(losses)
 
 
-# Train model
-f, losses = train_model(x, y, f, n_epochs=10000, lr=0.001)
-
-# Test model after training
-yhat = f(x)
-
-L = nn.MSELoss()
-loss = L(yhat, y)
-
-print("New output: ")
-print(yhat)
-print("Excepted output: ")
-print(y)
-print("New loss: ")
-print(loss)
+epoch_data, loss_data = train_model(train_dl, f)
 
 # Visualize the neural network
-dummy_input = torch.tensor([[6.0, 2.0]])
+dummy_input = train_ds[0][0].unsqueeze(0)
 torchviz.make_dot(f(dummy_input), params=dict(f.named_parameters())).render(
     "nn", format="png"
 )
 
-# Plot loss
-plt.plot(losses)
-plt.ylabel("Loss $L(y,\hat{y};a)$")
-plt.xlabel("Epochs")
+plt.plot(epoch_data, loss_data)
+plt.xlabel("Epoch Number")
+plt.ylabel("Cross Entropy")
+plt.title("Cross Entropy (per batch)")
 plt.savefig("plt.png")
 plt.show()
