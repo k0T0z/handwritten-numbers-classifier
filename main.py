@@ -12,6 +12,8 @@ import torchviz
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 
 class CTDataset(Dataset):
     def __init__(self, filepath):
@@ -109,3 +111,25 @@ plt.ylabel("Cross Entropy")
 plt.title("Cross Entropy (per batch)")
 plt.savefig("plt.png")
 plt.show()
+
+# TODO: This does not work!
+# temp_global_loss_data = np.array(global_loss_data).reshape(20,-1).mean(axis=1)
+# temp_global_time_stamps = np.array(global_time_stamps).reshape(20,-1).mean(axis=1)
+
+# plt.plot(temp_global_time_stamps, temp_global_loss_data, marker='o', label='Loss')
+# plt.xlabel("Time (s)")
+# plt.ylabel("MSE")
+# plt.title("MSE (per batch)")
+# plt.legend()
+# plt.savefig("plt.png")
+
+# test_x, test_y = test_ds[:]
+# yhats = f(test_x).argmax(axis=1)
+
+# fig, ax = plt.subplots(10,4,figsize=(10,15))
+# for i in range(40):
+#     plt.subplot(10,4,i+1)
+#     plt.imshow(test_x[i])
+#     plt.title(f'Predicted Digit: {yhats[i]}')
+# fig.tight_layout()
+# plt.show()
