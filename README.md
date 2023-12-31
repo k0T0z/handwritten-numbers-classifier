@@ -1,6 +1,6 @@
 # Handwritten Numbers Classifier
 
-This is my implementation to CSE477s course project using PyTorch.
+This is my analysis of ANNs and CNNs classification capabilities using MNIST dataset.
 
 ## Downloading PyTorch
 
