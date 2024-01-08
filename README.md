@@ -24,11 +24,13 @@ sudo apt install nvidia-cuda-toolkit
 
 ## Datasets (Only CSV)
 
-You can download it from [kaggle](https://www.kaggle.com/datasets/hojjatk/mnist-dataset) or the [official website](http://yann.lecun.com/exdb/mnist/index.html) and place it inside the root directory of the project.
+You can download it from kaggle [mnist-dataset](https://www.kaggle.com/datasets/hojjatk/mnist-dataset) or the official website [yann.lecun.com/exdb/mnist](http://yann.lecun.com/exdb/mnist/) and place it inside the root directory of the project.
 
 Note that the `.pt` datasets are not supported here.
 
-## Build Instructions (Linux only)
+## Build Instructions
+
+### Ubuntu Linux 64-bit
 
  - Clone the repository.
 ```bash
@@ -48,6 +50,34 @@ chmod +x install.sh
  - Run the project.
 ```bash
 python3 main.py
+```
+
+### Windows 64-bit
+
+1. Download [LibTorch with CUDA 12.1](https://download.pytorch.org/libtorch/cu121/libtorch-win-shared-with-deps-2.1.2%2Bcu121.zip).
+2. Extract the zip file.
+3. Download [CUDA 12.1](https://developer.nvidia.com/cuda-12-1-0-download-archive).
+4. Download CMake.
+5. Download Visual Studio 17 2022.
+6. Clone the repository.
+```bash
+git clone https://github.com/k0T0z/handwritten-numbers-classifier
+```
+7. Change directory.
+```bash
+cd handwritten-numbers-classifier
+```
+8. Create a build directory for CMake output
+```bash
+mkdir .build
+```
+9. Go inside.
+```bash
+cd .build
+```
+10. Run CMake.
+```bash
+cmake .. -G "Visual Studio 17 2022" -DCMAKE_PREFIX_PATH="{..}/libtorch" -DCUDA_TOOLKIT_ROOT_DIR="C:/{..}/NVIDIA GPU Computing Toolkit/CUDA/v12.1"
 ```
 
 ## Architecture
@@ -154,7 +184,7 @@ flowchart LR
 | --- | --- | --- | --- |
 | Intel® Core™ i7-8565U CPU @ 1.80GHz × 8 | 16.0 GiB | Mesa Intel® UHD Graphics 620 (WHL GT2) | Ubuntu Linux 64-bit |
 
-### Architecture 1 - [code](https://github.com/k0T0z/handwritten-numbers-classifier/blob/master/convolution_and_dense_network_with_SGD_optimizer.ipynb)
+### Architecture 1 - [convolution_and_dense_network_with_SGD_optimizer.ipynb](https://nbviewer.org/github/k0T0z/handwritten-numbers-classifier/blob/master/model/convolution_and_dense_network_with_SGD_optimizer.ipynb)
 
 | --- | Input | Number of kernels | Kernel | Stride | Padding | Activation function |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -185,7 +215,7 @@ flowchart LR
 | +5 | 97.99 | 0.4852823 | 103 |
 | +5 | 98.27 | 0.4189607 | 104 |
 
-### Architecture 2 - [code](https://github.com/k0T0z/handwritten-numbers-classifier/blob/master/convolution_and_dense_network_with_adam_optimizer.ipynb)
+### Architecture 2 - [convolution_and_dense_network_with_adam_optimizer.ipynb](https://nbviewer.org/github/k0T0z/handwritten-numbers-classifier/blob/master/model/convolution_and_dense_network_with_adam_optimizer.ipynb)
 
 | --- | Input | Number of kernels | Kernel | Stride | Padding | Activation function |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -212,7 +242,7 @@ flowchart LR
 | --- | --- | --- | --- |
 | - | - | - | - |
 
-### Architecture 3 - [code](https://github.com/k0T0z/handwritten-numbers-classifier/blob/master/dense_network_with_SGD_optimizer.ipynb)
+### Architecture 3 - [dense_network_with_SGD_optimizer.ipynb](https://nbviewer.org/github/k0T0z/handwritten-numbers-classifier/blob/master/model/dense_network_with_SGD_optimizer.ipynb)
 
 | Optimizer | Learning rate | Loss function |
 | --- | --- | --- |
@@ -232,7 +262,7 @@ flowchart LR
 | +50 | 97.91 | 0.2654962 | 457 |
 | +50 | 97.90 | 0.2155851 | 463 |
 
-### Architecture 4 - [code](https://github.com/k0T0z/handwritten-numbers-classifier/blob/master/dense_network_with_adam_optimizer.ipynb)
+### Architecture 4 - [dense_network_with_adam_optimizer.ipynb](https://nbviewer.org/github/k0T0z/handwritten-numbers-classifier/blob/master/model/dense_network_with_adam_optimizer.ipynb)
 
 | Optimizer | Learning rate | Loss function |
 | --- | --- | --- |
@@ -250,7 +280,7 @@ flowchart LR
 | +1 | 89.69 | 1.8232597 | 18 |
 | +1 | 88.21 | 1.8163300 | 15 |
 
-### Architecture 5 - [code](https://github.com/k0T0z/handwritten-numbers-classifier/blob/master/dense_network_with_leaky_ReLU_activation.ipynb)
+### Architecture 5 - [dense_network_with_leaky_ReLU_activation.ipynb](https://nbviewer.org/github/k0T0z/handwritten-numbers-classifier/blob/master/model/dense_network_with_leaky_ReLU_activation.ipynb)
 
 | Optimizer | Learning rate | Loss function |
 | --- | --- | --- |
@@ -268,7 +298,7 @@ flowchart LR
 | +50 | 97.19 | 0.5337998 | 463 |
 | +50 | 97.52 | 0.3658192 | 443 |
 
-### Architecture 6 - [code](https://github.com/k0T0z/handwritten-numbers-classifier/blob/master/dense_network_with_ELU_activation.ipynb)
+### Architecture 6 - [dense_network_with_ELU_activation.ipynb](https://nbviewer.org/github/k0T0z/handwritten-numbers-classifier/blob/master/model/dense_network_with_ELU_activation.ipynb)
 
 | Optimizer | Learning rate | Loss function |
 | --- | --- | --- |
